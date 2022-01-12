@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"net"
 	"net/http"
+	"net/http/pprof"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -22,15 +25,24 @@ func main() {
 	}
 	//多路复用处理函数
 	mux := http.NewServeMux()
+	//debug
+	mux.HandleFunc("/debug/pprof/", pprof.Index)
+	mux.HandleFunc("/debug/pprof/profile", pprof.Profile)
+	mux.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
+	mux.HandleFunc("/debug/pprof/trace", pprof.Trace)
+
 	mux.HandleFunc("/", rootHandler)
 	mux.HandleFunc("/healthz", healthz)
-	err := http.ListenAndServe(":8000", mux)
+	err := http.ListenAndServe(":8080", mux)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
+
+//健康检查路由
 func healthz(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "200\n")
+	//w.Header().Set()
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
@@ -50,8 +62,26 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	//设置环境变量默认值
 	ver := getEnvDefault("VERSION", "1.2.3")
 	io.WriteString(w, fmt.Sprintf("VERSION : %s\n", ver))
-	//客户端IP，httpcode
-	fmt.Printf("remoteAdd is:%s\n", r.RemoteAddr)
+	//03.客户端IP，httpcode
+	cIP := ClientIP(r)
+	log.Printf("Bingo!Response code:%s\n", 200)
+	log.Printf("Bingo!The client IP is:%s\n", cIP)
+}
+
+func ClientIP(r *http.Request) string {
+	xForwardFor := r.Header.Get("X-Forwarded-For")
+	ip := strings.TrimSpace(strings.Split(xForwardFor, ",")[0])
+	if ip != "" {
+		return ip
+	}
+	ip = strings.TrimSpace(r.Header.Get("X-Real-Ip"))
+	if ip != "" {
+		return ip
+	}
+	if ip, _, err := net.SplitHostPort(strings.TrimSpace(r.RemoteAddr)); err == nil {
+		return ip
+	}
+	return ""
 }
 
 //设置默认环境变量
