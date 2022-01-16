@@ -64,7 +64,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, fmt.Sprintf("VERSION : %s\n", ver))
 	//03.客户端IP，httpcode
 	cIP := ClientIP(r)
-	log.Printf("Bingo!Response code:%s\n", 200)
+	log.Printf("Bingo!Response code:%s\n", "200")
 	log.Printf("Bingo!The client IP is:%s\n", cIP)
 }
 
