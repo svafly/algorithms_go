@@ -1,3 +1,4 @@
+#编译
 FROM golang:1.17 AS build
 WORKDIR /httpserver/
 COPY . .
@@ -6,6 +7,7 @@ ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.cn,direct
 RUN GOOS=linux go build -installsuffix cgo -o httpserver main.go
 
+#构建镜像
 FROM busybox
 COPY --from=build /httpserver/httpserver /httpserver/httpserver
 EXPOSE 8080
