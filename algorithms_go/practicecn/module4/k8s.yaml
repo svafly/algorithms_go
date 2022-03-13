@@ -1,0 +1,14 @@
+kubeadm init \
+ --image-repository registry.aliyuncs.com/google_containers \
+ --kubernetes-version v1.23.4 \
+ --service-cidr=10.1.0.0/16 \
+ --pod-network-cidr=192.168.0.0/16 \
+ --apiserver-advertise-address=10.0.16.16
+
+ kubeadm join 10.0.16.16:6443 --token nu1z2d.wiaisktyo794vw99 --discovery-token-ca-cert-hash sha256:00777cda6ee43fc71ca01a108c46777b17e40f8157ef6344101a735aadd91380 -v=5
+
+sudo iptables -t nat -A OUTPUT -d 10.0.16.16 -j DNAT --to-destination 124.223.163.91
+
+
+ round_trippers.go:466 curl -v -XGET  -H "Accept: application/json, */*" 'https://10.0.16.16:6443/api/v1/namespaces/kube-public/configmaps/cluster-info?timeout=10s'
+ token.go:217]Failed to request cluster-info, will try again: Get "https://10.0.16.16:6443/api/v1/namespaces/kube-public/configmaps/cluster-info?timeout=10s": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
