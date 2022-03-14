@@ -13,3 +13,9 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+.idea/.gitignore
+.idea/src.iml
+algorithms_go/.idea/modules.xml
+.gitignore
+.gitignore
+algorithms_go/.idea/workspace.xml
