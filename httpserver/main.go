@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/svafly/practice_go/algorithms_go/practicecn/module10/httpserverd/metrics"
+	"github.com/svafly/practice_go/httpserver/metrics"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
@@ -64,7 +64,7 @@ func healthz(w http.ResponseWriter, r *http.Request) {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("entering root handler")
+	fmt.Println("entering root handler:")
 	user := r.URL.Query().Get("uid")
 	if user != "" {
 		io.WriteString(w, fmt.Sprintf("hello [%s]\n", user))
