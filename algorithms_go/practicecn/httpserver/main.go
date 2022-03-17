@@ -12,12 +12,6 @@ import (
 )
 
 func main() {
-	//http.HandleFunc("/test", rootHandler)
-	//err := http.ListenAndServe(":8000", nil)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-
 	//打印环境变量
 	envs := os.Environ()
 	for _, env := range envs {

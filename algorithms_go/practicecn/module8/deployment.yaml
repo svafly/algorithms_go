@@ -29,7 +29,7 @@ spec:
                 configMapKeyRef:
                   key: httpport
                   name: myenv
-          image: registry.cn-hangzhou.aliyuncs.com/svafly/httpserver:0.0.1
+          image: registry.cn-hangzhou.aliyuncs.com/svafly/httpserver:0.0.2
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3

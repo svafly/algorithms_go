@@ -9,6 +9,7 @@ kubeadm init \
 
 sudo iptables -t nat -A OUTPUT -d 10.0.16.16 -j DNAT --to-destination 124.223.163.91
 
+kubectl taint nodes --all node-role.kubernetes.io/master-
 
  round_trippers.go:466 curl -v -XGET  -H "Accept: application/json, */*" 'https://10.0.16.16:6443/api/v1/namespaces/kube-public/configmaps/cluster-info?timeout=10s'
  token.go:217]Failed to request cluster-info, will try again: Get "https://10.0.16.16:6443/api/v1/namespaces/kube-public/configmaps/cluster-info?timeout=10s": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
