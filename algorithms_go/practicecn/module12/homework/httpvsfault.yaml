@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: httpserver
+spec:
+  hosts:
+    - httpserver-helm.26.cc
+  gateways:
+    - httpsserver
+  http:
+    - route:
+        - destination:
+            host: httpserver.default.svc.cluster.local
+            port:
+              number: 80
+      fault:
+        abort:
+          httpStatus: 500
+          percentage:
+            value: 50

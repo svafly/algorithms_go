@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: httpserver
+  namespace: default
+spec:
+  gateways:
+  - httpsserver
+  hosts:
+  - httpserver-helm.26.cc
+  http:
+  - route:
+    - destination:
+        host: httpserver.default.svc.cluster.local
+        port:
+          number: 80
