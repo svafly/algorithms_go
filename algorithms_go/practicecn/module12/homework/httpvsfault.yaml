@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: httpserver
+  name: httpsserver
 spec:
   hosts:
     - httpserver-helm.26.cc
@@ -10,7 +10,7 @@ spec:
   http:
     - route:
         - destination:
-            host: httpserver.default.svc.cluster.local
+            host: httpsvc.cloudnative.svc.cluster.local
             port:
               number: 80
       fault:

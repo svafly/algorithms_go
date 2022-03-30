@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: httpserver
+  name: httpsserver
   namespace: cloudnative
 spec:
   gateways:
